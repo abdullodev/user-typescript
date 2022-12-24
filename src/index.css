@@ -214,6 +214,7 @@ li {
 .signin_box {
   width: 100%;
   height: 100vh;
+  background-color: #04e;
 }
 .signin_box .signin_form {
   position: absolute;
@@ -288,8 +289,8 @@ li {
   background-color: var(--back-2);
   padding: 0.8rem 1.4rem;
   border-radius: 10px;
-  width: 40%;
-  height: 40px;
+  width: 400px;
+  min-height: 40px;
   background-color: #04e;
   display: flex !important;
   justify-content: center !important;
@@ -311,13 +312,22 @@ li {
     grid-template-columns: 1fr;
   }
   .log_pass {
-    width: 60%;
+    width: 320px;
   }
 }
 
 @media (max-width: 480px) {
+  .signin_box .signin_form {
+    max-width: 340px;
+  }
   .form_box .form_input {
-    width: 280px;
+    width: 200px !important;
+  }
+  .signin_form .form_input {
+    width: 260px;
+  }
+  .signin_form .sign-in_btn {
+    width: 260px;
   }
 
   .form_box .form_add_btn {
@@ -325,6 +335,6 @@ li {
   }
 
   .log_pass {
-    width: 100%;
+    width: 280px;
   }
 }
