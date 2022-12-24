@@ -1,26 +1,45 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { FC, useEffect, useState } from "react";
+import { Routes, Route, Navigate, useNavigate } from "react-router-dom";
+import { Home } from "./pages/Home";
+import Login from "./pages/Login";
 
-function App() {
+const ProtectedRoute: FC<{ children: any }> = ({ children }) => {
+  const token = localStorage.getItem("token");
+
+  if (!token) {
+    return <Navigate to="/sign-in" />;
+  }
+
+  return children;
+};
+
+const App: React.FC = () => {
+  const [token, setToken] = useState<string | null>(
+    localStorage.getItem("token")
+  );
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!token) {
+      navigate("/sign-in");
+    }
+  }, [token]);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="app">
+      <Routes>
+        <Route
+          index
+          element={
+            <ProtectedRoute>
+              <Home setToken={setToken} />
+            </ProtectedRoute>
+          }
+        />
+        <Route path="/sign-in" element={<Login setToken={setToken} />} />
+      </Routes>
     </div>
   );
-}
+};
 
 export default App;
